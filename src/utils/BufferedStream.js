@@ -2,6 +2,7 @@
 
 import type SourceLocation from '../SourceLocation.js';
 import type SourceType from '../SourceType.js';
+import { EOF } from '../index.js';
 
 export default class BufferedStream {
   _getNextLocation: () => SourceLocation;
@@ -9,6 +10,13 @@ export default class BufferedStream {
 
   constructor(stream: () => SourceLocation) {
     this._getNextLocation = stream;
+    while (true) {
+      let loc: SourceLocation = stream();
+      this.pending.push(loc);
+      if (loc.type === EOF) {
+        return;
+      }
+    }
   }
 
   shift(): SourceLocation {
