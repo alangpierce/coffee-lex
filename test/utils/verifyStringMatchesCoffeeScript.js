@@ -49,7 +49,7 @@ function getCoffeeLexQuasis(code) {
   if (tokens.toArray()[0].type === HEREGEXP_START) {
     quasis = quasis.map(str => str.replace(/\\/g, '\\\\'));
   }
-  return quasis;
+  return quasis.filter(quasi => quasi.length > 0);
 }
 
 function getCoffeeScriptQuasis(code) {
@@ -73,5 +73,5 @@ function getCoffeeScriptQuasis(code) {
       );
     }
   }
-  return resultQuasis;
+  return resultQuasis.filter(quasi => quasi.length > 0);
 }
